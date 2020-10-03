@@ -1,4 +1,7 @@
+package Model;
+
 import java.io.Serializable;
+import java.util.Iterator;
 
 public class Product implements Serializable {
     private int id;
@@ -17,6 +20,7 @@ public class Product implements Serializable {
         this.price = price;
         this.description = description;
     }
+
 
     public int getId() {
         return id;
@@ -60,7 +64,7 @@ public class Product implements Serializable {
 
     @Override
     public String toString() {
-        return "Product{" +
+        return "Model.Product{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", producer='" + producer + '\'' +

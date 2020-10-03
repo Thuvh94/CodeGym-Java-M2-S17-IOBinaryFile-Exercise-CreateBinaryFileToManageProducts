@@ -1,18 +1,40 @@
+import Model.Product;
+import Service.ProductService;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        List<Product> productList = new ArrayList<>();
-        productList.add(new Product(1,"TV","Toshiba",3000000,"3D"));
-        productList.add(new Product(2,"TV","LG",4000000,"3D"));
-        productList.add(new Product(3,"TV","Sony",5000000,"3D"));
-        productList.add(new Product(4,"TV","SamSung",6000000,"3D"));
-        productList.add(new Product(5,"TV","LG",7000000,"3D"));
+    public static void display(List list){
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i));
+        }
+    }
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        ProductService productService = new ProductService();
 
-        Writer.write("Product list.bin",productList);
-        Reader.read("Product list.bin");
+        // Test display all
+        System.out.println("===Test display product===");
+        List<Product> productList = productService.findAll();
+        Writer.write("product.data",productList);
+        List<Product> outputList = Writer.read("product.data");
+        display(outputList);
+
+        // Test add product:
+        System.out.println("===Test add product===");
+        productService.add(new Product(5,"DVD","LG",500000,"Very good"));
+        productService.add(new Product(6,"Oven","Lock&lock",2500000,"Very good"));
+        Writer.write("product.data",productService.findAll());
+        outputList = Writer.read("product.data");
+        display(outputList);
+
+        //Test find product by name:
+        System.out.println("===Test find product===");
+        List<Product> foundedProducts = productService.findByName("TV");
+        Writer.write("foundedProduct.data",foundedProducts);
+        outputList = Writer.read("foundedProduct.data");
+        display(outputList);
+
     }
 }
